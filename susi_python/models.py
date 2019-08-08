@@ -1,4 +1,3 @@
-from pprint import pprint
 class QueryResponse:
     def __init__(self,answer, json, session):
         self.query = json['query']
