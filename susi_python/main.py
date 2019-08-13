@@ -86,9 +86,19 @@ def generate_result(response):
     for action in actions:
         data = dict()
         if isinstance(action, AnswerAction):
-            result['answer'] = action.expression
+            if action.plan_delay != None and action.plan_date != None:
+                data['answer'] = action.expression
+                data['plan_delay'] = action.plan_delay
+                data['plan_date'] = action.plan_date
+            else:
+                result['answer'] = action.expression
         elif isinstance(action, AudioAction):
-            result['identifier'] = action.identifier
+            if action.plan_delay != None and action.plan_date != None:
+                data['identifier'] = action.identifier
+                data['plan_delay'] = action.plan_delay
+                data['plan_date'] = action.plan_date
+            else:
+                result['identifier'] = action.identifier
         elif isinstance(action, TableAction):
             result['table'] = Table(action.columns, data)
         elif isinstance(action, MapAction):
@@ -108,7 +118,7 @@ def generate_result(response):
         elif isinstance(action, MediaAction):
             result['media_action'] = action.type
         elif isinstance(action, LanguageSwitchAction):
-            if action.plan_delay != None:
+            if action.plan_delay != None and action.plan_date != None:
                 data['language'] = action.language
                 data['answer'] = action.expression
                 data['plan_delay'] = action.plan_delay
