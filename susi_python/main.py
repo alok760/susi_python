@@ -82,12 +82,11 @@ def generate_result(response):
     result = dict()
     actions = response.answer.actions
     data = response.answer.data
-
-    result['test'] = "Test_addition"
+    result["planned_actions"] = []
     for action in actions:
+        data = dict()
         if isinstance(action, AnswerAction):
             result['answer'] = action.expression
-            result['plan_delay'] = action.plan_delay
         elif isinstance(action, AudioAction):
             result['identifier'] = action.identifier
         elif isinstance(action, TableAction):
@@ -109,11 +108,17 @@ def generate_result(response):
         elif isinstance(action, MediaAction):
             result['media_action'] = action.type
         elif isinstance(action, LanguageSwitchAction):
-            result['language'] = action.language
-            result['answer'] = action.expression
+            if action.plan_delay != None:
+                data['language'] = action.language
+                data['answer'] = action.expression
+                data['plan_delay'] = action.plan_delay
+                data['plan_date'] = action.plan_date
+            else:
+                result['language'] = action.language
+                result['answer'] = action.expression
+        if data != {}:
+            result["planned_actions"].append(data)
 
-        #result['plan_delay'] = response.plan_delay
-        #result['plan_date'] = response.plan_date
 
     return result
 
