@@ -102,8 +102,9 @@ class TableAction(BaseAction):
         self.columns = columns
 
 class LanguageSwitchAction(BaseAction):
-    def __init__(self, language, expression):
-        super().__init__()
+    def __init__(self, language, expression, plan_delay = None, plan_date = None):
+        print("LanguageSwitchAction", plan_delay, plan_date)
+        super().__init__(plan_delay,plan_date)
         self.language = language
         self.expression = expression
 
