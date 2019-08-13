@@ -83,9 +83,11 @@ def generate_result(response):
     actions = response.answer.actions
     data = response.answer.data
 
+    result['test'] = "Test_addition"
     for action in actions:
         if isinstance(action, AnswerAction):
             result['answer'] = action.expression
+            result['plan_delay'] = action.plan_delay
         elif isinstance(action, AudioAction):
             result['identifier'] = action.identifier
         elif isinstance(action, TableAction):
@@ -110,8 +112,8 @@ def generate_result(response):
             result['language'] = action.language
             result['answer'] = action.expression
 
-        result['plan_delay'] = response.plan_delay
-        result['plan_date'] = response.plan_date
+        #result['plan_delay'] = response.plan_delay
+        #result['plan_date'] = response.plan_date
 
     return result
 

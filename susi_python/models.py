@@ -6,13 +6,13 @@ class QueryResponse:
         self.answer_time = json['answer_time']
         self.session = session
         self.answer = answer
-        self.plan_delay = None
-        self.plan_date = None
-        for action in json["answers"][0]["actions"]:
-            if "plan_delay" in action.keys():
-                self.plan_delay = action["plan_delay"]
-            if "plan_date" in action.keys():
-                self.plan_date = action["plan_date"]
+        #self.plan_delay = None
+        #self.plan_date = None
+        #for action in json["answers"][0]["actions"]:
+        #    if "plan_delay" in action.keys():
+        #        self.plan_delay = action["plan_delay"]
+        #    if "plan_date" in action.keys():
+        #        self.plan_date = action["plan_date"]
 
     def __repr__(self):
         return 'QueryResponse (query = %s , client_id = %s, ' \
@@ -79,8 +79,9 @@ class Metadata:
 
 
 class BaseAction:
-    def __init__(self):
-        pass
+    def __init__(self, plan_delay = None, plan_date = None):
+        self.plan_delay = plan_delay
+        self.plan_date = plan_date
 
 
 class UnknownAction(BaseAction):
